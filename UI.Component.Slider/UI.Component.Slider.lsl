@@ -1,6 +1,6 @@
 #include "UI.Protocol"
 
-//Functions marked with an "_" at the begining are required!!
+//Functions marked with an "_" at the begining are expected to be found in every component!!
 
 //This function should be called by the component whenever it wants
 //to report an event change
