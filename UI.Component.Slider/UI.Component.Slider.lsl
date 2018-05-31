@@ -89,7 +89,7 @@ default
                 }
             } 
         //}
-        if(gTouchCounter>gTouchCounter>1000){
+        if(gTouchCounter>1000){
             gTouchCounter=0;
         }
     }
