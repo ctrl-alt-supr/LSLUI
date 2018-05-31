@@ -13,18 +13,23 @@ integer gValue = FALSE;
 string _getValue(){
     return (string)gValue;
 }
-_setValue(string newVal){
+_setValue(string newVal, integer raiseEvents){
     integer oldVal = gValue;
     gValue=(integer)newVal;
     updateTexture();
-    _onEvent(UI_EVENT_TYPE_CHANGED, (string)oldVal, (string)gValue, "");
+    if(oldVal!=gValue){
+        if(raiseEvents){ 
+            _onEvent(UI_EVENT_TYPE_CHANGED, (string)oldVal, (string)gValue, ""); 
+        }
+        _onEvent(UI_EVENT_TYPE_INTERNALCHANGE, (string)oldVal, (string)gValue, "");
+    }
 }
 setValue(integer newVal){
-    _setValue((string)newVal);
+    _setValue((string)newVal, TRUE);
 }
 
 updateTexture(){
-    llSetLinkAlpha( LINK_THIS, 1, gFaceUpper);
+    llSetLinkAlpha( LINK_THIS, 0, gFaceUpper);
     if(gValue){
         llSetLinkAlpha( LINK_THIS, 1, gFaceLower);
     }else{
@@ -40,14 +45,14 @@ default
     state_entry()
     {
         _onEvent(UI_EVENT_TYPE_PAINT_START, "", "", "");
-        gValue=0;
+        gValue=FALSE;
         updateTexture();
         _onEvent(UI_EVENT_TYPE_PAINT_END, "", "", "");
     }
     touch_start(integer total_number)
     {
         integer touchFace = llDetectedTouchFace(0);
-        if(touchFace == gFaceNod){
+        if(touchFace == gFaceTouch){
             if(gValue==TRUE){
                 setValue(FALSE);
             }else{

@@ -13,14 +13,19 @@ float gValue = 0.0;
 string _getValue(){
     return (string)gValue;
 }
-_setValue(string newVal){
+_setValue(string newVal, integer raiseEvents){
     float oldVal = gValue;
     gValue=min(max((float)newVal,0),1);
     updateTexture();
-    _onEvent(UI_EVENT_TYPE_CHANGED, (string)oldVal, (string)gValue, "");
+    if(oldVal!=gValue){
+        if(raiseEvents){ 
+            _onEvent(UI_EVENT_TYPE_CHANGED, (string)oldVal, (string)gValue, ""); 
+        }
+        _onEvent(UI_EVENT_TYPE_INTERNALCHANGE, (string)oldVal, (string)gValue, "");
+    }
 }
 setValue(float newVal){
-    _setValue((string)newVal);
+    _setValue((string)newVal, TRUE);
 }
 float max(float x,float y)
 {
