@@ -4,35 +4,23 @@
 
 //This should return the unique name of this component type
 string _getType(){
-    return "scrl";
+    return "chk";
 }
-float gExtends = 0.8;
-float gIncrement = 0.1;
-float gValue = 0.0;
+
+integer gValue = FALSE
+
 //This should return value of this component as an string use "" if doesn't report a value
 string _getValue(){
     return (string)gValue;
 }
 _setValue(string newVal){
     float oldVal = gValue;
-    gValue=min(max((float)newVal,0),1);
+    gValue=(integer)newVal;
     updateTexture();
     _onEvent(UI_EVENT_TYPE_CHANGED, (string)oldVal, (string)gValue, "");
 }
-setValue(float newVal){
+setValue(integer newVal){
     _setValue((string)newVal);
-}
-float max(float x,float y)
-{
-    return ( ( llAbs( x >= y ) ) * x ) + ( ( llAbs( x<y ) ) * y );
-}
- 
-float min(float x, float y)
-{
-    return ( ( llAbs( x >= y ) ) * y ) + ( ( llAbs( x<y ) ) * x );
-}
-float textureOffset(){
-    return max(min(((0.9*gValue)/1)-0.4,0.4),-0.4);
 }
 
 updateTexture(){
@@ -45,10 +33,10 @@ updateTexture(){
             origRep, (vector)("<"+(string)origOff.x+", " + (string)textureOffset() + ", 0>"), 0
     ]); 
 }
-integer gFaceScrollUp=1;
-integer gFaceScrollDown=3;
-integer gFaceNod=0;
-integer gTouchCounter = 0;
+integer gFaceTick=2;
+integer gFaceCross=1;
+integer gFaceBg=3;
+integer gFaceTouch=0;
 default
 {
     state_entry()
