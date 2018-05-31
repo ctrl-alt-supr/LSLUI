@@ -8,8 +8,11 @@ string _getType(){
 }
 
 
-string _getGroup(){
-    list lstDsc=llParseString2List(llGetObjectDesc(), ["_"], [])
+string getGroup(){
+    return getGroupByDesc(llGetObjectDesc());
+}
+string getGroupByDesc(string desc){
+    list lstDsc=llParseString2List(desc, ["_"], [])
     if(llGetListLength(lstDsc)>1){
         return llList2String(lstDsc, 1);
     }else{
@@ -46,6 +49,14 @@ updateTexture(){
         llSetLinkAlpha( LINK_THIS, 0, gFaceLower);
     }
 }
+integer startswith(string haystack, string needle)
+{
+    return llDeleteSubString(haystack, llStringLength(needle), 0x7FFFFFF0) == needle;
+}
+integer endswith(string haystack, string needle)
+{
+    return llDeleteSubString(haystack, 0x8000000F, ~llStringLength(needle)) == needle;
+}
 integer gFaceLower=2;
 integer gFaceUpper=1;
 integer gFaceBg=3;
@@ -69,6 +80,20 @@ default
                 setValue(TRUE);
             }
             updateTexture();
+        }
+    }
+    link_message(integer source, integer num, string str, key id){
+        //This component needs to listen to events fired by other components to make sure only
+        //one radio of this group is selected at a given time.
+        if(gValue){
+            if(num==UI_EVENT_NUMBER){
+                if(startswith((string)id, _getType()) && getGroupByDesc(id)==getGroup()){
+                    list evTypeAndPars = llParseString2List(str, ["^"],[]);
+                    if(llGetListLength(evTypeAndPars)>1){
+                        //llList2String
+                    }
+                }
+            }
         }
     }
 }
