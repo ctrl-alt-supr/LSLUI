@@ -85,7 +85,7 @@ default
     link_message(integer source, integer num, string str, key id){
         //This component needs to listen to events fired by other components to make sure only
         //one radio of this group is selected at a given time.
-        llOwnerSay((string)source+" "+(string)num+" "+(string)str+" "+(string)id);
+        //llOwnerSay((string)source+" "+(string)num+" "+(string)str+" "+(string)id);
         if(gValue){
             if(source!=llGetLinkNumber() && num==UI_EVENT_NUMBER){
                 if(startswith((string)id, _getType()) && getGroupByDesc(id)==getGroup()){
@@ -93,11 +93,11 @@ default
                     if(llGetListLength(evTypeAndPars)>1){
                         string evType=llList2String(evTypeAndPars,0);
                         if(evType==UI_EVENT_TYPE_INTERNALCHANGE){
-                            llOwnerSay("INTERNALCHANGE");
+                            //llOwnerSay("INTERNALCHANGE");
                             list evPars = llParseString2List(llList2String(evTypeAndPars,1), ["|"],[]);
                             if(llGetListLength(evPars)>=2){
                                 string newVal=llList2String(evPars,1);
-                                llOwnerSay(newVal);
+                                //llOwnerSay(newVal);
                                 if(newVal=="1"){
                                     _setValue((string)FALSE, FALSE);
                                     updateTexture();
