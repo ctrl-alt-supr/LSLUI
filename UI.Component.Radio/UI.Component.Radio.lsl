@@ -7,7 +7,7 @@ string _getType(){
     return "chk";
 }
 
-integer gValue = FALSE;
+integer gValue = FALSE
 
 //This should return value of this component as an string use "" if doesn't report a value
 string _getValue(){
