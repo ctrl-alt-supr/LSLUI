@@ -93,11 +93,14 @@ default
                     if(llGetListLength(evTypeAndPars)>1){
                         string evType=llList2String(evTypeAndPars,0);
                         if(evType==UI_EVENT_TYPE_INTERNALCHANGE){
+                            llOwnerSay("INTERNALCHANGE");
                             list evPars = llParseString2List(llList2String(evTypeAndPars,1), ["|"],[]);
                             if(llGetListLength(evPars)>=2){
                                 string newVal=llList2String(evPars,1);
-                                if(newVal==(string)TRUE){
-                                    _setValue((string)newVal, FALSE);
+                                llOwnerSay(newVal);
+                                if(newVal=="1"){
+                                    _setValue((string)FALSE, FALSE);
+                                    updateTexture();
                                 }
                             }
                         }
